@@ -9,7 +9,7 @@ import Notfound from './pages/Notfound.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import { firebaseConfig } from "./firebaseConfig.js";
+import { firebaseConfig } from "../firebaseConfig.js";
 import Layout from './Layout.jsx'
 import { getFirestore } from 'firebase/firestore'
 import { useEffect } from 'react'
@@ -23,10 +23,14 @@ export const auth=getAuth(app);
 
 
 export default function App() {
-  const [user,setUser]=useState(null)
+  const [user,setUser]=useState(null);
+  const [admin,setAdmin]=useState(false)
 
   useEffect(()=>{
-    const unsubscribe= onAuthStateChanged(auth,(currentUser)=> setUser(currentUser));
+    const unsubscribe= onAuthStateChanged(auth,(currentUser)=> {
+      setUser(currentUser)
+      if(currentUser.email== "bela@gmail.com")setAdmin(true); else setAdmin(false);
+    });
     return()=>unsubscribe
   },[]);
   async function logout() {
@@ -34,9 +38,9 @@ export default function App() {
   }
 
   const router=createBrowserRouter([
-    {path:"/", element:<Layout user={user} logout={logout}/>,children:[
+    {path:"/", element:<Layout user={user} admin={admin} logout={logout}/>,children:[
       {path:"/",element: <Messages user={user} db={db}/>},
-      {path:"/users",element: <Users/>},
+      {path:"/users",element: <Users db={db}/>},
       {path:"/about",element: <About/>},
       {path:"*",element: <Notfound/>},
       {path:"/login",element: <Login auth={auth} setUser={setUser}/>}

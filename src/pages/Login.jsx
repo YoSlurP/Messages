@@ -7,7 +7,13 @@ import { useNavigate } from 'react-router-dom';
 export default function Login({auth,setUser}) {
     const [email,setEmail]=useState("");
     const [password,setPassword]=useState("");
-    const[loginError,setLoginError]=useState(false)
+    const[loginError,setLoginError]=useState(false);
+    const handleKeyDown = (e) => {
+      // Az 'Enter' billentyű kódja 13
+      if (e.key === 'Enter') {
+        login();
+      }
+    };
 
     const navigate= useNavigate();
 
@@ -24,7 +30,7 @@ export default function Login({auth,setUser}) {
     
 
   return (
-    <div className='login' >
+    <div className='login'onKeyDown={handleKeyDown} >
         <TextField
         error={loginError}
         required

@@ -7,8 +7,15 @@ import { Button, TextField } from '@mui/material';
 export default function Messages({user,db}) {
 
   const[messages,setMessages]=useState([]);
-  const[kinek,setKinek]=useState("")
-  const[uzenet,setUzenet]=useState("")
+  const[kinek,setKinek]=useState("");
+  const[uzenet,setUzenet]=useState("");
+  const handleKeyDown = (e) => {
+    // Az 'Enter' billentyű kódja 13
+    if (e.key === 'Enter') {
+      ujUzenet();
+    }
+  };
+
   useEffect(() => {
     if(user){
       const unsub = onSnapshot(query(collection(db, 'messages'),or(where("ki","==",user.email),where("kinek","==",user.email)),orderBy("mikor")), (snap) => {
@@ -22,11 +29,12 @@ export default function Messages({user,db}) {
   },[user]);
 
   async function ujUzenet() {
-    await addDoc(collection(db,"messages"),{ki:user.email,kinek:kinek,uzenet:uzenet,mikor:Timestamp.now().toDate})
+    await addDoc(collection(db,"messages"),{ki:user.email,kinek:kinek,uzenet:uzenet,mikor:Timestamp.now().toDate()})
+    setKinek("");setUzenet("");
   }
 
   return (
-    <div className='messages' onKeyDown={e => e.key === 'Enter' ? ujUzenet:""}>
+    <div className='messages' onKeyDown={handleKeyDown}>
       {user?<><div className='uzenet'>
         <TextField
         required
@@ -40,16 +48,16 @@ export default function Messages({user,db}) {
         label="Üzenet"
         size='small'
         value={uzenet}
-        onChange={e=>setUzenet(e.target.value)
-        }
+        onChange={e=>setUzenet(e.target.value)}
+      
         />
         <Button variant='contained' color='success'onClick={ujUzenet} >Küldés</Button>
         </div>
+      
         {messages.map(x=><p key={x.id}>{x.ki} - {x.kinek} : {x.uzenet} ({x.mikor.toDate().toDateString()})</p>)}
       </>:"Jelentkezz be!"}
       
     </div>
   )
 }
-
 

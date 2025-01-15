@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, Outlet, useLocation } from 'react-router-dom'
 import { Button, ButtonGroup, Chip } from '@mui/material';
 
-export default function Layout({user,logout,auth}) {
+export default function Layout({user,logout,admin}) {
     const {pathname}=useLocation();
   return (
     <>
@@ -11,7 +11,8 @@ export default function Layout({user,logout,auth}) {
                 <Link to="/"><Button variant={pathname=="/"?"outlined":"contained"}>Messages</Button></Link>
                 <Link to="/users"><Button variant={pathname=="/users"?"outlined":"contained"}>Users</Button></Link>
                 <Link to="/about"><Button variant={pathname=="/anout"?"outlined":"contained"}>About</Button></Link>
-            </ButtonGroup>      
+            </ButtonGroup>
+
             {user ?
             <div className='email'>
                 <Chip label={user.email} variant='outlined'/>
