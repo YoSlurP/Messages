@@ -17,7 +17,7 @@ function Users({db}) {
 
   return (
     <div className='users'>
-        {users.map(x=> <li key={x.id}>{x.nev} ({x.email})</li>)}
+        <ul>{users.map(x=> <li key={x.id}>{x.nev} ({x.email})</li>)}</ul>
     </div>
   )
 }

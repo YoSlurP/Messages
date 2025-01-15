@@ -6,6 +6,7 @@ import Users from './pages/Users.jsx'
 import About from './pages/About.jsx'
 import Login from './pages/Login.jsx'
 import Notfound from './pages/Notfound.jsx'
+import Admin from './pages/Admin.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
@@ -29,7 +30,7 @@ export default function App() {
   useEffect(()=>{
     const unsubscribe= onAuthStateChanged(auth,(currentUser)=> {
       setUser(currentUser)
-      if(currentUser.email== "bela@gmail.com")setAdmin(true); else setAdmin(false);
+      if(currentUser &&currentUser.email== "bela@gmail.com")setAdmin(true); else setAdmin(false);
     });
     return()=>unsubscribe
   },[]);
@@ -43,6 +44,7 @@ export default function App() {
       {path:"/users",element: <Users db={db}/>},
       {path:"/about",element: <About/>},
       {path:"*",element: <Notfound/>},
+      {path:"/admin", element:<Admin admin={admin}/>},
       {path:"/login",element: <Login auth={auth} setUser={setUser}/>}
     ]}
   ])

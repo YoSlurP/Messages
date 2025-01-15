@@ -9,8 +9,11 @@
 .menu .login{
   display: flex; align-items: center; gap: 10px;
 }
-.menu Button{
+.menu Button, .uzenet Button{
   text-transform: none;
+}
+.menu .admin{
+  margin-left: 10px;
 }
 .page{
   background-color: white;

@@ -7,11 +7,14 @@ export default function Layout({user,logout,admin}) {
   return (
     <>
         <div className='menu'>
+          <div>
             <ButtonGroup variant='contained' aria-label="Basic button group">
                 <Link to="/"><Button variant={pathname=="/"?"outlined":"contained"}>Messages</Button></Link>
                 <Link to="/users"><Button variant={pathname=="/users"?"outlined":"contained"}>Users</Button></Link>
                 <Link to="/about"><Button variant={pathname=="/anout"?"outlined":"contained"}>About</Button></Link>
             </ButtonGroup>
+            {admin?<Link to="/admin"><Button className='admin' variant={pathname == "/admin" ? "outlined":"contained"}>Admin</Button></Link>:""}
+          </div>
 
             {user ?
             <div className='email'>

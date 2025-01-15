@@ -1,10 +1,16 @@
 import React from 'react'
+import { Navigate } from 'react-router-dom'
 
-export default function Admin() {
+export default function Admin({admin}) {
   return (
-    <div>
-      
-    </div>
+    <>
+    {admin ?
+      <div>
+        
+      </div>
+    :<Navigate to="/" />}
+    </>
+    
   )
 }
 
