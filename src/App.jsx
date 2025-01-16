@@ -47,7 +47,7 @@ export default function App() {
       {path:"/admin", element:<Admin admin={admin}/>},
       {path:"/login",element: <Login auth={auth} setUser={setUser}/>}
     ]}
-  ])
+  ],{basename:"/messages/"})
   return (
     <div className='app'>
         <RouterProvider router={router}/>
